@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FilmIcon from "../element/icon/filmIcon";
+// import FilmIcon from "../element/icon/filmIcon";
 
 const Navbar = () => {
   return (
@@ -10,7 +10,7 @@ const Navbar = () => {
     >
       <div className="flex items-center justify-start  w-3/4">
         <div className="ml-4">
-          <FilmIcon fill={`white`} />
+          {/* <FilmIcon fill={`white`} /> */}
         </div>
         <div className="flex items-center mr-4">
           <Link to={`/`} className="font-primary text-3xl text-white mx-2">React </Link>
