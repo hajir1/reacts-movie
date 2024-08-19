@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Parisienne&family=Roboto+Slab:wght@100..900&family=Zeyada&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Parisienne&family=Roboto+Slab:wght@100..900&display=swap");
+
+.font-primary {
+  font-family: "Zeyada", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.font-secondary {
+  font-family: "Lora", serif;
+  font-optical-sizing: auto;
+}
+::-webkit-scrollbar {
+  width: 0.2rem; /* Lebar scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  display: none; /* Warna latar belakang track */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f3f4f6; /* Warna handle (scroll) */
+  border-radius: 0.4rem;
+  display: none; /* Opsional, untuk membuat ujung scroll bulat */
+}
