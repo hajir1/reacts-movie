@@ -1,6 +1,6 @@
 import React from "react";
-import FilmIcon from "../element/icon/filmIcon";
 import { Link } from "react-router-dom";
+import FilmIcon from "../element/icon/filmIcon";
 
 const Navbar = () => {
   return (
