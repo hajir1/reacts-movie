@@ -10,7 +10,6 @@ import {
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import FilmIcon from "../component/element/icon/filmIcon";
 import { SliderV1 } from "../component/fragment/Slider";
 import SearchIcon from "../component/element/icon/SearchIcon";
 import { BoxV1 } from "../component/layouts/BoxModel";
