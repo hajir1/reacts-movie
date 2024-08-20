@@ -16,6 +16,7 @@ import TvSeriesByIdPage from "./page/TvSeriesByIdPage.jsx";
 import SearchPage from "./page/SearchPage.jsx";
 import AllCharMoviePage from "./page/AllCharMoviePage.jsx";
 import AllCharTvPage from "./page/AllCharTvPage.jsx";
+import NotFoundPage from "./page/404Page.jsx";
 
 const { Button } = chakraTheme.components;
 
@@ -54,7 +55,10 @@ const routes = createBrowserRouter([
     path: `/search/:key`,
     element: <SearchPage />,
   },
-  
+  {
+    path: `*`,
+    element: <NotFoundPage />,
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(

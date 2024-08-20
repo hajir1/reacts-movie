@@ -6,11 +6,12 @@ import {
   UseAPIKeywordById,
   UseAPIRecomendationById,
   UseAPISosmedById,
+  UseAPIVideo,
 } from "../services/API_DATA";
 import { useParams } from "react-router-dom";
 
 import Hero from "../component/layouts/Hero";
-import { BoxV3, BoxV4 } from "../component/layouts/BoxModel";
+import { BoxV3, BoxV4, BoxV5 } from "../component/layouts/BoxModel";
 import Simple from "../component/element/Label";
 import Keyword from "../component/layouts/Keyword";
 import {
@@ -28,14 +29,15 @@ const TvSeriesByIdPage = () => {
   const detailRecomendation = UseAPIRecomendationById("tv", id);
   const detailKeyword = UseAPIKeywordById("tv", id);
   const detailSosmed = UseAPISosmedById("tv", id);
+  const detailVideo = UseAPIVideo("tv", id);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  },[]);
+  }, []);
 
   return (
     <div className="w-full">
-      <Navbar /> 
-      <Laman about={`tv series | ${detailTvSeries?.data?.name}`}/>
+      <Navbar />
+      <Laman about={`tv series | ${detailTvSeries?.data?.name}`} />
       <Hero datas={detailTvSeries} type={`tv`} />
       <div className="w-full lg:flex">
         {" "}
@@ -62,6 +64,16 @@ const TvSeriesByIdPage = () => {
               Recomendations
             </div>
             <BoxV4 type={`tv`} datas={detailRecomendation} />
+          </div>
+          <div
+            className={`${
+              detailVideo?.isLoading && detailTvSeries?.isLoading && "hidden"
+            } w-full my-2 p-2 `}
+          >
+            <div className="mt-2 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl">
+              Video
+            </div>
+            <BoxV5 type={`tv`} datas={detailVideo} />
           </div>
         </div>
         <div

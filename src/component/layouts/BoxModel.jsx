@@ -329,3 +329,35 @@ export const BoxV4 = ({ datas, type }) => {
     </div>
   );
 };
+
+// video
+export const BoxV5 = ({ datas, type }) => {
+  return (
+    <>
+      {datas?.data?.results?.length > 0 ? (
+        datas?.data?.results?.map((video) => (
+          <div key={video?.id} className="w-5/6  custom:w-full lg:mt-6">
+            <a
+              className={`${
+                video?.site === "YouTube"
+                  ? "border-b-purple-700  text-purple-950"
+                  : "text-black border-b-black"
+              } ml-2 tracking-wide border-b-2  text-sm font-semibold lg:text-base lg:font-normal`}
+              href={`${
+                video?.site === "YouTube"
+                  ? `https://www.youtube.com/watch?v=${video?.key}`
+                  : ""
+              }`}
+            >
+              {video?.name}
+            </a>
+          </div>
+        ))
+      ) : (
+        <h1 className="text-center w-full ml-1 mt-2 mr-1 tracking-wide text-base font-semibold">
+          no videos have been added
+        </h1>
+      )}
+    </>
+  );
+};

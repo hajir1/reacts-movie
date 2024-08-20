@@ -13,7 +13,7 @@ const Hero = ({ datas, type, schema }) => {
         <div className="w-full h-screen flex-col flex items-center justify-center">
           {" "}
           <Spinner width={`10rem`} speed="0.65s" height={`10rem`} />
-          <h1 className="text-slate-900 font-semibold font-sans pt-2 text-center text-xl custom:text-black lg:text-gray-200 lg:pt-0 ">
+          <h1 className="text-slate-900 font-semibold font-sans pt-2 text-center text-xl custom:text-black lg:pt-0 ">
             Loading...
           </h1>
         </div>

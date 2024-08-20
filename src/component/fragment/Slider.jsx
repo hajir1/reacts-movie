@@ -31,7 +31,7 @@ export const SliderV1 = ({ datas }) => {
                 backgroundSize: "100%",
               }}
               key={data?.id}
-              className="relative z-10 w-full flex flex-col bg-no-repeat custom:h-[20rem] md:h-[28rem] lg:h-[40rem] lg:p-4 "
+              className="relative z-10 w-full flex flex-col bg-no-repeat custom:h-[20rem] md:h-[28rem] lg:h-[30rem] xl:h-[36rem] lg:p-4 "
             >
               <img
                 style={{

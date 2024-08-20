@@ -12,7 +12,7 @@ import {
 
 import Simple from "../component/element/Label";
 import Hero from "../component/layouts/Hero";
-import { BoxV3, BoxV4 } from "../component/layouts/BoxModel";
+import { BoxV3, BoxV4, BoxV5 } from "../component/layouts/BoxModel";
 import {
   Facebook,
   HomeUrl,
@@ -66,26 +66,15 @@ const MovieByIdPage = () => {
             </div>
             <BoxV4 type={`movie`} datas={detailRecomendation} />
           </div>
-          <div className="w-full my-2 p-2">
+          <div
+            className={`${
+              detailVideo?.isLoading && detailMovie?.isLoading && "hidden"
+            } w-full my-2 p-2 `}
+          >
             <div className="mt-2 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl">
               Video
             </div>
-            {detailVideo?.data?.results?.length > 0 ? (
-              detailVideo?.data?.results?.map((video) => (
-                <div key={video?.id} className="w-5/6  custom:w-full lg:mt-6">
-                  <a
-                    className="ml-2 tracking-wide border-b-2 border-b-purple-700  text-purple-950 text-sm font-semibold lg:text-base lg:font-normal md:text-black lg:text-black"
-                    href={`https://www.youtube.com/watch?v=${video?.key}`}
-                  >
-                    {video?.name}
-                  </a>
-                </div>
-              ))
-            ) : (
-              <h1 className="text-center w-full ml-1 mt-2 mr-1 tracking-wide text-base font-semibold">
-                no videos have been added
-              </h1>
-            )}
+            <BoxV5 type={`movie`} datas={detailVideo} />
           </div>
         </div>
         <div

@@ -1,28 +1,17 @@
 import React from "react";
 
-const FilmIcon = ({fill}) => {
+const FilmIcon = ({ fill }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="2.2rem"
-      height="2.2rem"
-      viewBox="0 0 50 50"
+      width="2rem"
+      height="2rem"
+      viewBox="0 0 24 24"
     >
-      <g
+      <path
         fill={fill}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={4}
-      >
-        <path
-          stroke={"#232423"}
-          d="M25 35.417v8.333h12.5v-8.333zm-12.5 0v8.333H25v-8.333zM6.25 43.75h37.5zM37.5 14.583V6.25H25v8.333zm-12.5 0V6.25H12.5v8.333zM6.25 6.25h37.5zM27.083 25l-4.166-3.125v6.25z"
-        ></path>
-        <path
-          stroke="#232423"
-          d="M43.75 33.333V16.667a2.084 2.084 0 0 0-2.083-2.084H8.333c-1.15 0-2.083.933-2.083 2.084v16.666c0 1.15.933 2.084 2.083 2.084h33.334c1.15 0 2.083-.933 2.083-2.084"
-        ></path>
-      </g>
+        d="M22 10v3.81c-.61-.35-1.28-.59-2-.72V12H4v8h9.09c.12.72.37 1.39.72 2H4a2 2 0 0 1-2-2V10zm-5.29-2.93l-2.74-3.53l-1.97.39l2.75 3.53zm4.91-.97l-.78-3.92l-3.93.78l2.74 3.54zm-9.81 1.95L9.07 4.5l-1.97.41l2.75 3.53zM4.16 5.5l-.98.19a1.995 1.995 0 0 0-1.57 2.35L2 10l4.9-.97zM17 22l5-3l-5-3z"
+      ></path>
     </svg>
   );
 };

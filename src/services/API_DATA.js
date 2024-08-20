@@ -85,6 +85,9 @@ export const UseAPIById = (schema, id) => {
         `https://api.themoviedb.org/3/${schema}/${id}?language=en-US`,
         options
       );
+      if (!response.ok) {
+        throw new Error("movie not found");
+      }
       return response.json();
     },
   });
