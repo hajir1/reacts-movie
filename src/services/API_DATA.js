@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 
-const AUTH = process.env.VITE_AUTH;
+const AUTH = import.meta.env.VITE_AUTH;
 const options = {
   method: "GET",
   headers: {
