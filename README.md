@@ -4,12 +4,19 @@
 
 
 ```bash
-git clone https://github.com/hajir1/movie.git
+git clone https://github.com/hajir1/movie.git {nama folder}
 
 ```
 
 ## usage
 
-# npm install
-# npm run dev
-# open [pip](https://localhost:5173)
+```bash
+npm install
+
+```
+```bash
+npm run dev
+
+```
+
+# open localhost:5173 in browser

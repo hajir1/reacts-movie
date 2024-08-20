@@ -8,7 +8,7 @@ const Footer = () => {
         <h1 className="text-center ml-1 tracking-wide text-base font-semibold lg:text-base lg:font-normal ">
           saya ucapkan terima kasih kepada <a href="http://">tmdb </a> karena
           telah menyediakan data movie secara gratis dalam demontrasi website
-          ini , situs web ini dibat semata-mata untuk tujuan pembelajaran dan
+          ini , situs web ini dibuat untuk tujuan pembelajaran dan
           demontrasi ketrampilan saya sebagai developer. saya tidak bermaksud
           untuk melanggar hak cipta. <br /> pembuat server / data / seluruh api
           pada website ini yaitu
