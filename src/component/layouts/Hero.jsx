@@ -59,16 +59,16 @@ const Hero = ({ datas, type, schema }) => {
                 {type === "movie" && datas?.data?.title}
               </h1>
             </div>
-            <div className="lg:flex lg:items-center lg:ml-6 lg:mt-6">
-              <h1 className="text-slate-900 font-sans pt-2 text-center text-sm custom:text-black lg:text-gray-200 lg:pt-0 lg:text-base lg:font-semibold">
+            <div className="lg:flex lg:flex-col lg:items-start lg:ml-6 lg:mt-6">
+              <h1 className="text-slate-900 font-sans pt-2 text-center text-sm custom:text-black lg:text-gray-200 lg:pt-0 lg:text-xl lg:ml-6 ">
                 {type === "movie" && FormatDate(datas?.data?.release_date)}
                 {type === "tv" && FormatDate(datas?.data?.first_air_date)}
               </h1>
-              <ul className="flex justify-center flex-wrap gap-2 ">
+              <ul className="flex justify-center flex-wrap gap-2 lg:flex-col ">
                 {datas?.data?.genres?.map((genre) => (
                   <li
                     key={genre?.id}
-                    className="text-sm text-slate-900 custom:text-black lg:text-gray-200 lg:text-base lg:ml-3 lg:font-semibold lg:tracking-wider"
+                    className="text-sm text-slate-900 custom:text-black lg:text-gray-200 lg:text-base lg:ml-3 lg:tracking-wider lg:mt-1"
                   >
                     - {genre?.name}
                   </li>

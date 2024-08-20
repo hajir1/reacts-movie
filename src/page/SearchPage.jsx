@@ -57,7 +57,11 @@ const SearchPage = () => {
               <div className=" relative">
                 {" "}
                 <img
-                  src={`${`https://image.tmdb.org/t/p/w300/${data?.backdrop_path}`}`}
+                  src={`${
+                    data?.backdrop_path === null
+                      ? "/movienotfound.webp"
+                      : `https://image.tmdb.org/t/p/w300/${data?.backdrop_path}`
+                  }`}
                   className="w-14 h-14 rounded-md object-cover object-center lg:w-16 lg:h-16 "
                 />
                 <div

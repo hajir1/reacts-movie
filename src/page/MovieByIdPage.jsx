@@ -26,7 +26,7 @@ const MovieByIdPage = () => {
   const { id } = useParams();
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+  });
 
   const detailMovie = UseAPIById("movie", id);
   const detailChar = UseAPICharById("movie", id);

@@ -289,7 +289,7 @@ export const BoxV4 = ({ datas, type }) => {
             <div className="relative">
               <img
                 src={`${
-                  recomendation?.poster_path === null
+                  recomendation?.backdrop_path === null
                     ? "/movienotfound.webp"
                     : `https://image.tmdb.org/t/p/w300/${recomendation?.backdrop_path}`
                 }`}
@@ -336,7 +336,7 @@ export const BoxV5 = ({ datas, type }) => {
     <>
       {datas?.data?.results?.length > 0 ? (
         datas?.data?.results?.map((video) => (
-          <div key={video?.id} className="w-5/6  custom:w-full lg:mt-6">
+          <div key={video?.id} className="w-5/6  custom:w-full lg:mt-2">
             <a
               className={`${
                 video?.site === "YouTube"

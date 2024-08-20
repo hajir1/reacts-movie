@@ -46,9 +46,9 @@ const Homepage = () => {
       });
     }
   };
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+  // useEffect(() => {
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // });
 
   return (
     <div>
@@ -113,7 +113,7 @@ const Homepage = () => {
         <div
           className="absolute inset-0 bg-cover w-[100%] bg-center "
           style={{
-            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url(https://image.tmdb.org/t/p/w500/${popularImages})`,
+            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url(https://image.tmdb.org/t/p/w500/${popularImages})`,
           }}
         ></div>
 
