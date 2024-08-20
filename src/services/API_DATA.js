@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 
-const AUTH =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNjc0NGZmNmFlZTYzN2U3ZjkzOTFlYjRmNGE0OGRiOCIsIm5iZiI6MTcyMzE4Njc1MC42MTEzNTYsInN1YiI6IjY2YjViZDBmNGQzNzJlNGJhNDI1ZmIwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HmVXKs4n2wcG0C-Tk12QJYY1TN-0MiV4ozpqOeaZhv4";
+const AUTH = process.env.VITE_AUTH;
 const options = {
   method: "GET",
   headers: {
