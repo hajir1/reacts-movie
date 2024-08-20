@@ -7,6 +7,7 @@ import {
   UseAPIKeywordById,
   UseAPIRecomendationById,
   UseAPISosmedById,
+  UseAPIVideo,
 } from "../services/API_DATA";
 
 import Simple from "../component/element/Label";
@@ -23,15 +24,16 @@ import Laman from "../component/fragment/Laman";
 
 const MovieByIdPage = () => {
   const { id } = useParams();
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // }, []);
 
   const detailMovie = UseAPIById("movie", id);
   const detailChar = UseAPICharById("movie", id);
   const detailSosmed = UseAPISosmedById("movie", id);
   const detailKeyword = UseAPIKeywordById("movie", id);
   const detailRecomendation = UseAPIRecomendationById("movie", id);
+  const detailVideo = UseAPIVideo("movie", id);
 
   return (
     <div className="w-full ">
@@ -63,6 +65,27 @@ const MovieByIdPage = () => {
               Recomendations
             </div>
             <BoxV4 type={`movie`} datas={detailRecomendation} />
+          </div>
+          <div className="w-full my-2 p-2">
+            <div className="mt-2 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl">
+              Video
+            </div>
+            {detailVideo?.data?.results?.length > 0 ? (
+              detailVideo?.data?.results?.map((video) => (
+                <div key={video?.id} className="w-5/6  custom:w-full lg:mt-6">
+                  <a
+                    className="ml-2 tracking-wide border-b-2 border-b-purple-700  text-purple-950 text-sm font-semibold lg:text-base lg:font-normal md:text-black lg:text-black"
+                    href={`https://www.youtube.com/watch?v=${video?.key}`}
+                  >
+                    {video?.name}
+                  </a>
+                </div>
+              ))
+            ) : (
+              <h1 className="text-center w-full ml-1 mt-2 mr-1 tracking-wide text-base font-semibold">
+                no videos have been added
+              </h1>
+            )}
           </div>
         </div>
         <div
@@ -110,6 +133,7 @@ const MovieByIdPage = () => {
               href={`${detailMovie?.data?.homepage}`}
             />
           </div>
+
           <div className={`${detailMovie?.isLoading && "hidden"} lg:mt-10`}>
             <Simple
               quote={`${detailMovie?.data?.original_title}`}

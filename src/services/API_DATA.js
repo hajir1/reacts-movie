@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 
-const AUTH = import.meta.env.VITE_AUTH;
+const AUTH =
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNjc0NGZmNmFlZTYzN2U3ZjkzOTFlYjRmNGE0OGRiOCIsIm5iZiI6MTcyMzE4Njc1MC42MTEzNTYsInN1YiI6IjY2YjViZDBmNGQzNzJlNGJhNDI1ZmIwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HmVXKs4n2wcG0C-Tk12QJYY1TN-0MiV4ozpqOeaZhv4";
 const options = {
   method: "GET",
   headers: {
@@ -148,6 +149,19 @@ export const UseAPICreditPerson = (schemaHistory, id) => {
     queryFn: async () => {
       const response = await fetch(
         `https://api.themoviedb.org/3/person/${id}/${schemaHistory}?language=en-US`,
+        options
+      );
+      return response.json();
+    },
+  });
+  return APIcall;
+};
+export const UseAPIVideo = (schema, id) => {
+  const APIcall = useQuery({
+    queryKey: ["credit", id, schema],
+    queryFn: async () => {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/${schema}/${id}/videos?language=en-US`,
         options
       );
       return response.json();
