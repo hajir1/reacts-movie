@@ -185,3 +185,16 @@ export const UseAPISearch = (query) => {
   });
   return APIcall;
 };
+export const UseAPISearchTv = (query) => {
+  const APIcall = useQuery({
+    queryKey: ["keyword", query],
+    queryFn: async () => {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/search/tv?query=${query}&include_adult=false&language=en-US&page=1`,
+        options
+      );
+      return response.json();
+    },
+  });
+  return APIcall;
+};
