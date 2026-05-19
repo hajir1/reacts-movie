@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
 import {
-  APISearchMovie,
   UseAPIPopular,
   UseAPITrendingAll,
   UseAPITrendingMovies,
@@ -35,96 +33,100 @@ const Homepage = () => {
   const datasPopular = UseAPIPopular(popularType);
   const { search, setSearch } = useSearch();
   const navigate = useNavigate();
+
   const handleSearch = (e) => {
     e.preventDefault();
-    if (search.length > 0) {
-      APISearchMovie(search, (cb) => {
-        if (cb?.status === 200) {
-          navigate(`/search/${search}`);
-          setSearch("");
-        }
-      });
+    if (search.trim().length > 0) {
+      navigate(`/search/${search.trim()}`);
     }
   };
-  // useEffect(() => {
-  //   window.scrollTo({ top: 0, behavior: "smooth" });
-  // });
 
   return (
-    <div>
-      <div
-        style={{
-          boxShadow: `0.2rem 0.1rem 2.3rem gray`,
-        }}
-        className="w-full bg-secondary custom:bg-black"
-      >
+    <div className="w-full min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col justify-between">
+      <div>
         <Navbar />
-        <div className="w-full overflow-hidden mt-2 relative left-1/2 -translate-x-1/2 ">
+        
+        {/* Hero Slider Section */}
+        <div className="w-full overflow-hidden mt-1 relative">
           <SliderV1 datas={datasTrendingAll} />
         </div>
-        <div className="w-full flex justify-center p-4 z-30">
+
+        {/* Global Search Bar */}
+        <div className="w-full flex justify-center p-6 z-30 -mt-8 relative max-w-4xl mx-auto">
           {datasTrendingAll?.isLoading ? (
-            <div className="bg-gray-800 h-10 w-5/6 animate-pulse duration-100 transition-all "></div>
+            <div className="bg-slate-800/80 h-12 w-full rounded-xl animate-pulse"></div>
           ) : (
-            <div className="relative w-5/6 bg-gray-700 rounded-lg">
+            <form 
+              onSubmit={handleSearch} 
+              className="relative w-full bg-slate-900/90 border border-white/10 rounded-xl shadow-2xl focus-within:border-indigo-500/50 transition-all duration-200"
+            >
               <input
                 value={search}
                 required
                 onChange={(e) => setSearch(e.target.value)}
-                className={`w-5/6 outline-none pl-4 bg-gray-700 text-white placeholder:tracking-wider placeholder:text-gray-400 py-2 rounded-md`}
-                placeholder="search movie..."
+                className="w-full outline-none pl-12 pr-12 bg-transparent text-white placeholder:text-slate-400 py-3.5 rounded-xl text-sm md:text-base"
+                placeholder="Search movies, TV shows, or people..."
               />
-              <div
-                onClick={(e) => handleSearch(e)}
-                className={`${
-                  search.length > 0 && "bg-gray-200"
-                } h-full absolute w-10 right-0 top-1/2 -translate-y-1/2`}
-              >
-                <div className="flex items-center justify-end mr-3 h-full">
-                  <SearchIcon
-                    fill={`${search?.length > 0 ? "primary" : "gray"}`}
-                  />
-                </div>
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                <SearchIcon fill="#818cf8" />
               </div>
-            </div>
+              {search?.trim().length > 0 && (
+                <button
+                  type="submit"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all"
+                >
+                  Search
+                </button>
+              )}
+            </form>
           )}
         </div>
-      </div>
-      <div className="bg-gray-100 p-1 shadow-lg lg:bg-gray-200">
-        <BoxV1
-          datas={datasTrendingMovies}
-          title={"Trending Movie"}
-          valueTrend={valueTrendMovie}
-          setValueTrend={setValueTrendMovie}
-          type={`movie`}
-          schema={`trending`}
-        />
 
-        <BoxV1
-          datas={datasTrendingTv}
-          title={"Trending Tv"}
-          setValueTrend={setValueTrendTv}
-          valueTrend={valueTrendTv}
-          type={`tv`}
-          schema={`trending`}
-        />
-      </div>
-      <div className="relative overflow-x-hidden p-2">
-        <div
-          className="absolute inset-0 bg-cover w-[100%] bg-center "
-          style={{
-            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url(https://image.tmdb.org/t/p/w500/${popularImages})`,
-          }}
-        ></div>
+        {/* Trending Sections */}
+        <div className="max-w-6xl mx-auto px-4 mt-8 flex flex-col gap-8">
+          <div className="bg-slate-900/30 border border-white/5 rounded-2xl p-4 lg:p-6 backdrop-blur-sm">
+            <BoxV1
+              datas={datasTrendingMovies}
+              title="Trending Movies"
+              valueTrend={valueTrendMovie}
+              setValueTrend={setValueTrendMovie}
+              type="movie"
+              schema="trending"
+            />
+          </div>
 
-        <div className="relative my-8">
-          <BoxV1
-            datas={datasPopular}
-            title={"Curently Popular"}
-            schema={`popular`}
-            valueTrend={popularType}
-            setValueTrend={setPopularType}
-          />
+          <div className="bg-slate-900/30 border border-white/5 rounded-2xl p-4 lg:p-6 backdrop-blur-sm">
+            <BoxV1
+              datas={datasTrendingTv}
+              title="Trending TV Series"
+              setValueTrend={setValueTrendTv}
+              valueTrend={valueTrendTv}
+              type="tv"
+              schema="trending"
+            />
+          </div>
+        </div>
+
+        {/* Popular Section with Dynamic Poster Backdrop */}
+        <div className="relative overflow-x-hidden p-6 mt-12 min-h-[24rem] flex flex-col justify-center">
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-10 filter blur-sm transition-all duration-500"
+            style={{
+              backgroundImage: `linear-gradient(to bottom, rgba(11, 15, 25, 0.9), rgba(11, 15, 25, 0.95)), url(https://image.tmdb.org/t/p/w500/${popularImages})`,
+            }}
+          ></div>
+
+          <div className="relative max-w-6xl mx-auto w-full z-10">
+            <div className="bg-slate-900/40 border border-white/5 rounded-2xl p-4 lg:p-6 backdrop-blur-md">
+              <BoxV1
+                datas={datasPopular}
+                title="Currently Popular"
+                schema="popular"
+                valueTrend={popularType}
+                setValueTrend={setPopularType}
+              />
+            </div>
+          </div>
         </div>
       </div>
       <Footer />

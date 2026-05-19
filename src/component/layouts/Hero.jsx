@@ -3,86 +3,89 @@ import {
   CircularProgressLabel,
   Spinner,
 } from "@chakra-ui/react";
-import React from "react";
 import FormatDate from "../../libs/Formatdate";
+import { getTmdbImageUrl } from "../../libs/imageHelper";
 
-const Hero = ({ datas, type, schema }) => {
+const Hero = ({ datas, type }) => {
   return (
     <>
       {datas?.isLoading ? (
-        <div className="w-full h-screen flex-col flex items-center justify-center">
-          {" "}
-          <Spinner width={`10rem`} speed="0.65s" height={`10rem`} />
-          <h1 className="text-slate-900 font-semibold font-sans pt-2 text-center text-xl custom:text-black lg:pt-0 ">
-            Loading...
+        <div className="w-full min-h-[50vh] flex flex-col items-center justify-center bg-[#0b0f19] text-slate-100">
+          <Spinner width="4rem" height="4rem" speed="0.8s" color="indigo.500" thickness="4px" />
+          <h1 className="mt-4 font-semibold text-lg text-slate-400 animate-pulse">
+            Loading Details...
           </h1>
         </div>
       ) : (
         <div
           style={{
-            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url(https://image.tmdb.org/t/p/w500/${datas?.data?.backdrop_path})`,
+            backgroundImage: `linear-gradient(to bottom, rgba(11, 15, 25, 0.8) 0%, rgba(11, 15, 25, 0.95) 100%), url(${getTmdbImageUrl(datas?.data?.backdrop_path, "original")})`,
             backgroundPosition: "center top",
-            backgroundSize: "100%",
+            backgroundSize: "cover",
           }}
-          className="relative w-full p-2 flex flex-col bg-no-repeat lg:h-[40rem] lg:p-4 lg:flex-row"
+          className="relative w-full p-6 flex flex-col md:flex-row gap-6 bg-no-repeat min-h-[30rem] lg:min-h-[38rem] items-center border-b border-white/5"
         >
-          <img
-            style={{
-              boxShadow: "0.1rem 0.1rem 0.3rem gray",
-            }}
-            className="w-2/5 rounded-md mt-5 ml-4 h-48 object-cover object-center lg:w-1/5 lg:h-[20rem]"
-            src={`${
-              datas?.data?.poster_path === null
-                ? "/movienotfound.webp"
-                : `https://image.tmdb.org/t/p/w500/${datas?.data?.poster_path}`
-            }`}
-            alt=""
-          />
-          <div className="bg-gray-100 mt-2 rounded-md lg:w-3/4 lg:bg-transparent">
-            <div className="flex items-center justify-evenly gap-2 lg:flex-col-reverse lg:items-start">
-              <div className="ml-1 mt-6 flex items-center flex-col lg:flex-row lg:ml-8">
+          {/* Movie Poster */}
+          <div className="shrink-0 w-2/3 custom:w-1/2 md:w-1/4 lg:w-1/5">
+            <img
+              className="w-full rounded-xl object-cover object-center img-soft-shadow border border-white/10"
+              src={getTmdbImageUrl(datas?.data?.poster_path, "w500")}
+              alt="poster"
+            />
+          </div>
+
+          {/* Movie Metadata Details */}
+          <div className="flex-1 w-full bg-slate-900/60 border border-white/5 backdrop-blur-md p-6 rounded-2xl md:bg-transparent md:border-none md:p-0">
+            <div className="flex flex-col md:flex-row md:items-center gap-4">
+              <div className="flex items-center gap-3">
                 <CircularProgress
-                  color="gray.500"
-                  size={`4rem`}
-                  value={Math.round(datas.data?.vote_average * 10)}
+                  trackColor="white/10"
+                  color="indigo.400"
+                  size="3.5rem"
+                  thickness="8px"
+                  value={Math.round((datas.data?.vote_average || 0) * 10)}
                 >
-                  <CircularProgressLabel className="custom:text-black lg:text-gray-100">
-                    {Math.round(datas.data?.vote_average * 10)}%
+                  <CircularProgressLabel className="font-bold text-white text-xs">
+                    {Math.round((datas.data?.vote_average || 0) * 10)}%
                   </CircularProgressLabel>
                 </CircularProgress>
-                <p className="text-xs font-sans capitalize text-slate-700 mt-2 lg:text-gray-200 lg:font-bold lg:text-xl lg:tracking-wider lg:w-20 custom:text-black lg:mx-2 lg:p-2">
-                  skor users
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-300 w-20 leading-tight">
+                  User Score
                 </p>
               </div>
-              <h1 className="w-3/5 text-slate-900 font-sans pt-2 text-center text-2xl custom:text-black lg:text-gray-200 lg:w-full lg:text-start lg:ml-6 lg:text-4xl">
-                {type === "tv" && datas?.data?.name}
-                {type === "movie" && datas?.data?.title}
+              
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                {type === "tv" ? datas?.data?.name : datas?.data?.title}
               </h1>
             </div>
-            <div className="lg:flex lg:flex-col lg:items-start lg:ml-6 lg:mt-6">
-              <h1 className="text-slate-900 font-sans pt-2 text-center text-sm custom:text-black lg:text-gray-200 lg:pt-0 lg:text-xl lg:ml-6 ">
-                {type === "movie" && FormatDate(datas?.data?.release_date)}
-                {type === "tv" && FormatDate(datas?.data?.first_air_date)}
-              </h1>
-              <ul className="flex justify-center flex-wrap gap-2 lg:flex-col ">
+
+            <div className="mt-4 flex flex-col gap-1 text-sm text-slate-300">
+              <span className="font-medium text-indigo-400">
+                {type === "movie"
+                  ? FormatDate(datas?.data?.release_date)
+                  : FormatDate(datas?.data?.first_air_date)}
+              </span>
+              <ul className="flex flex-wrap gap-x-3 gap-y-1 mt-1 text-slate-400 text-xs font-medium">
                 {datas?.data?.genres?.map((genre) => (
-                  <li
-                    key={genre?.id}
-                    className="text-sm text-slate-900 custom:text-black lg:text-gray-200 lg:text-base lg:ml-3 lg:tracking-wider lg:mt-1"
-                  >
-                    - {genre?.name}
+                  <li key={genre?.id} className="bg-white/5 px-2 py-0.5 rounded border border-white/5">
+                    {genre?.name}
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="p-2 lg:ml-6 lg:mt-10">
-              <p className="text-4xl text-gray-800 font-primary custom:text-black lg:text-gray-200">
-                {" "}
-                {datas?.data?.tagline}
-              </p>
-              <p className=" text-center mt-2 text-sm font-sans text-slate-700 custom:text-black lg:text-gray-200 lg:text-base lg:tracking-wider lg:mt-6">
-                {datas?.data?.overview}
+            {/* Tagline & Overview */}
+            <div className="mt-6 border-t border-white/10 pt-4 md:border-none md:pt-0">
+              {datas?.data?.tagline && (
+                <p className="italic text-base md:text-lg text-slate-300 font-medium mb-3">
+                  &ldquo;{datas?.data?.tagline}&rdquo;
+                </p>
+              )}
+              <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-2">
+                Overview
+              </h3>
+              <p className="text-slate-300 text-sm md:text-base leading-relaxed max-w-3xl">
+                {datas?.data?.overview || "No overview available."}
               </p>
             </div>
           </div>

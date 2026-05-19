@@ -1,28 +1,68 @@
-@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Parisienne&family=Roboto+Slab:wght@100..900&family=Zeyada&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Parisienne&family=Roboto+Slab:wght@100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
-.font-primary {
-  font-family: "Zeyada", cursive;
-  font-weight: 400;
-  font-style: normal;
+body {
+  background-color: #0b0f19;
+  color: #f8fafc;
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
-.font-secondary {
-  font-family: "Lora", serif;
-  font-optical-sizing: auto;
+
+/* Glassmorphism panel styling */
+.glass-panel {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+.glass-panel-hover {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-4px);
+}
+
+/* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 0.2rem; /* Lebar scrollbar */
+  width: 6px;
+  height: 6px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-  background: #f3f4f6;
-  display: none; /* Warna latar belakang track */
+  background: #0b0f19;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #f3f4f6; /* Warna handle (scroll) */
-  border-radius: 0.4rem;
-  display: none; /* Opsional, untuk membuat ujung scroll bulat */
+  background: #1e293b;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Brand gradients */
+.text-gradient {
+  background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Inset shadow card effect for cinematic look */
+.card-inset-shadow {
+  box-shadow: inset 0px -50px 80px rgba(11, 15, 25, 0.95), 0px 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Premium shadows for posters/images */
+.img-soft-shadow {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-padding {
+  padding: 0.8rem 1.5rem;
 }

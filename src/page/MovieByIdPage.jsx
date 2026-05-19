@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Navbar from "../component/layouts/Navbar";
 import { useParams } from "react-router-dom";
 import {
@@ -10,7 +10,6 @@ import {
   UseAPIVideo,
 } from "../services/API_DATA";
 
-import Simple from "../component/element/Label";
 import Hero from "../component/layouts/Hero";
 import { BoxV3, BoxV4, BoxV5 } from "../component/layouts/BoxModel";
 import {
@@ -18,15 +17,16 @@ import {
   HomeUrl,
   Instagram,
   Twitter,
-} from "../component/element/Sosmed";
+} from "../component/element/SocialLinks";
 import Keyword from "../component/layouts/Keyword";
-import Laman from "../component/fragment/Laman";
+import Breadcrumb from "../component/fragment/Breadcrumb";
+import MetadataItem from "../component/element/MetadataItem";
 
 const MovieByIdPage = () => {
   const { id } = useParams();
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+  }, []);
 
   const detailMovie = UseAPIById("movie", id);
   const detailChar = UseAPICharById("movie", id);
@@ -38,7 +38,7 @@ const MovieByIdPage = () => {
   return (
     <div className="w-full ">
       <Navbar />
-      <Laman about={`movie | ${detailMovie?.data?.title}`} />
+      <Breadcrumb about={`movie | ${detailMovie?.data?.title}`} />
       <Hero datas={detailMovie} type={`movie`} />
       <div className="w-full lg:flex ">
         {" "}
@@ -48,7 +48,7 @@ const MovieByIdPage = () => {
           } w-full lg:w-3/4 `}
         >
           <div className="lg:p-4">
-            <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl">
+            <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-slate-100 text-xl lg:text-2xl">
               Character
             </div>
 
@@ -61,7 +61,7 @@ const MovieByIdPage = () => {
               "hidden"
             } w-full lg:p-4`}
           >
-            <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl">
+            <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-slate-100 text-xl lg:text-2xl">
               Recomendations
             </div>
             <BoxV4 type={`movie`} datas={detailRecomendation} />
@@ -71,7 +71,7 @@ const MovieByIdPage = () => {
               detailVideo?.isLoading && detailMovie?.isLoading && "hidden"
             } w-full my-2 p-2 `}
           >
-            <div className="mt-2 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl">
+            <div className="mt-2 pl-2 font-sans font-bold tracking-normal text-slate-100 text-xl lg:text-2xl">
               Video
             </div>
             <BoxV5 type={`movie`} datas={detailVideo} />
@@ -80,9 +80,9 @@ const MovieByIdPage = () => {
         <div
           className={`${
             detailKeyword?.isLoading && detailMovie?.isLoading && "hidden"
-          } w-full lg:w-[23%] custom:w-4/5 p-1 lg:bg-gray-50`}
+          } w-full lg:w-[23%] custom:w-4/5 p-4 lg:bg-slate-900/30 lg:border-l lg:border-white/5`}
         >
-          <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl">
+          <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-slate-100 text-xl lg:text-2xl">
             Keywords
           </div>
           <Keyword datas={detailKeyword} type={`movie`} />
@@ -124,12 +124,12 @@ const MovieByIdPage = () => {
           </div>
 
           <div className={`${detailMovie?.isLoading && "hidden"} lg:mt-10`}>
-            <Simple
+            <MetadataItem
               quote={`${detailMovie?.data?.original_title}`}
               title={`original Title`}
             />
-            <Simple quote={`${detailMovie?.data?.status}`} title={`Status`} />
-            <Simple
+            <MetadataItem quote={`${detailMovie?.data?.status}`} title={`Status`} />
+            <MetadataItem
               quote={`${
                 detailMovie?.data?.spoken_languages[0]
                   ? `${detailMovie?.data?.spoken_languages[0]?.name} / ${detailMovie?.data?.spoken_languages[0]?.english_name}`
@@ -137,10 +137,10 @@ const MovieByIdPage = () => {
               } `}
               title={`Language`}
             />
-            <Simple
+            <MetadataItem
               quote={`${
-                detailChar?.data?.budget !== 0
-                  ? `${detailMovie?.data?.budget.toLocaleString("en-US", {
+                detailMovie?.data?.budget
+                  ? `${detailMovie.data.budget.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                     })}`
@@ -149,10 +149,10 @@ const MovieByIdPage = () => {
               title={`Budget`}
             />
 
-            <Simple
+            <MetadataItem
               quote={`${
-                detailChar?.data?.revenue !== 0
-                  ? `${detailMovie?.data?.revenue.toLocaleString("en-US", {
+                detailMovie?.data?.revenue
+                  ? `${detailMovie.data.revenue.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                     })}`

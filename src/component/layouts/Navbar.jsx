@@ -1,23 +1,17 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import FilmIcon from "../element/icon/FilmIcon";
 
 const Navbar = () => {
   return (
-    <div
-      style={{ padding: "0.7rem 0 0.3rem 0.1rem" }}
-      className="flex flex-wrap items-center bg-secondary custom:bg-black"
-    >
-      <div className="flex items-center justify-start  w-11/12 ">
-        <div className="ml-4 ">
-          <FilmIcon fill={`white`} />
+    <div className="w-full sticky top-0 z-50 flex items-center justify-between bg-[#0b0f19]/80 backdrop-blur-md border-b border-white/5 navbar-padding">
+      <div className="flex items-center justify-start w-full">
+        <div className="mr-3">
+          <FilmIcon fill="#818cf8" />
         </div>
-        <div className="flex items-center mr-4 mt-3">
-          <Link to={`/`} className="font-primary text-3xl text-white mx-2">
-            React{" "}
-          </Link>
-          <p className="font-primary text-3xl text-primary">Movie</p>
-        </div>
+        <Link to="/" className="flex items-center tracking-wider hover:opacity-90 transition-opacity">
+          <span className="font-bold text-2xl text-white">React</span>
+          <span className="font-bold text-2xl text-gradient ml-1">Movie</span>
+        </Link>
       </div>
     </div>
   );

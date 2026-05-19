@@ -1,26 +1,23 @@
-import React from "react";
-
 const Keyword = ({ datas, type }) => {
   const mappingKeyword =
     type === "movie" ? datas?.data?.keywords : datas?.data?.results;
   return (
-    <div className="w-full flex justify-evenly gap-1 p-1 flex-wrap">
+    <div className="w-full flex flex-wrap gap-1.5 p-2 justify-start">
       {mappingKeyword?.length > 0 ? (
         mappingKeyword?.map((key) => (
           <div
             key={key?.id}
-            className="py-1 border-slate-300 border-[1px] bg-gray-100 rounded-md mt-1  px-2"
+            className="py-1 border border-white/5 bg-white/5 rounded-md px-2.5 hover:bg-white/10 transition-colors cursor-default"
           >
-            <p className="ml-1 tracking-wide text-xs font-semibold inline-block lg:text-black lg:text-sm">
-              {" "}
+            <p className="tracking-wide text-xs font-medium text-slate-300">
               {key?.name}
             </p>
           </div>
         ))
       ) : (
-        <h1 className="ml-1 mt-2 mr-1 tracking-wide text-base font-semibold">
-          no keyword have been added
-        </h1>
+        <p className="text-xs text-slate-500 font-medium p-2">
+          no keywords added
+        </p>
       )}
     </div>
   );

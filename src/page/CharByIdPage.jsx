@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../component/layouts/Navbar";
 import {
   UseAPIById,
   UseAPICreditPerson,
   UseAPISosmedById,
 } from "../services/API_DATA";
-import { Link, useParams } from "react-router-dom";
-import Simple from "../component/element/Label";
+import { useParams } from "react-router-dom";
+import MetadataItem from "../component/element/MetadataItem";
 import FormatDate from "../libs/Formatdate";
+import { getProfileImageUrl } from "../libs/imageHelper";
 
 import { Spinner } from "@chakra-ui/react";
 import { Skeletonv3 } from "../component/element/Skeleton";
@@ -18,8 +19,8 @@ import {
   HomeUrl,
   Instagram,
   Twitter,
-} from "../component/element/Sosmed";
-import Laman from "../component/fragment/Laman";
+} from "../component/element/SocialLinks";
+import Breadcrumb from "../component/fragment/Breadcrumb";
 
 const CharByIdPage = () => {
   const { id } = useParams();
@@ -28,164 +29,138 @@ const CharByIdPage = () => {
   const detailSosmed = UseAPISosmedById("person", id);
   const detailCredits = UseAPICreditPerson(schemaHistory, id);
   const [showMore, setShowMore] = useState(false);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  },[]);
+  }, []);
 
   return (
-    <div className="w-full bg-gray-100">
+    <div className="w-full min-h-screen bg-[#0b0f19] text-slate-100 pb-16">
       <Navbar />
-      <Laman about={`character | ${detailPerson?.data?.name}`}/>
-      <div className="w-full flex flex-col items-center p-2 ">
+      <Breadcrumb about={`character | ${detailPerson?.data?.name}`} />
+      
+      <div className="max-w-6xl mx-auto px-4 mt-8 flex flex-col items-center">
         {detailPerson?.isLoading ? (
-          <div className="w-full h-screen flex-col flex items-center justify-center">
-            {" "}
-            <Spinner width={`10rem`} speed="0.65s" height={`10rem`} />
-            <h1 className="text-slate-900 font-semibold font-sans pt-2 text-center text-xl custom:text-black lg:text-gray-200 lg:pt-0 ">
-              Loading...
+          <div className="w-full min-h-[60vh] flex flex-col items-center justify-center">
+            <Spinner width="4rem" height="4rem" speed="0.8s" color="indigo.500" thickness="4px" />
+            <h1 className="mt-4 font-semibold text-slate-400 animate-pulse">
+              Loading Character Details...
             </h1>
           </div>
         ) : (
-          <div className="relative w-full custom:w-5/6 md:w-full md:flex-row md:flex md:justify-center">
-            <div className="w-full flex flex-col items-center md:w-1/3 md:p-2 lg:w-1/4 ">
-              {" "}
+          <div className="w-full flex flex-col md:flex-row gap-8 items-start justify-center mt-4">
+            {/* Profile Image & Social Media */}
+            <div className="w-full md:w-1/3 lg:w-1/4 flex flex-col items-center">
               <img
-                className="w-1/2 lg:w-full h-[14rem] custom:h-[16rem] md:h-[20rem] md:w-full lg:h-[30rem] object-cover object-center rounded-md inset-0 shadow-lg"
-                src={`${
-                  detailPerson?.data?.profile_path !== null
-                    ? `https://image.tmdb.org/t/p/w500/${detailPerson?.data?.profile_path}`
-                    : "/people.jpeg"
-                }`}
-                alt=""
+                className="w-2/3 md:w-full rounded-xl object-cover img-soft-shadow border border-white/10"
+                src={getProfileImageUrl(detailPerson?.data?.profile_path, "w500")}
+                alt={detailPerson?.data?.name}
               />
-              <h1 className="text-4xl font-semibold mt-2 md:text-center md:text-2xl ">
+              <h1 className="text-3xl font-extrabold text-white mt-4 text-center leading-tight">
                 {detailPerson?.data?.name}
               </h1>
-              <div className="w-full flex justify-center items-center gap-2 mb-6 mt-4 lg:mt-2">
-                <Instagram
-                  className={`${
-                    detailSosmed?.data?.instagram_id === null ||
-                    detailSosmed?.data?.instagram_id === ""
-                      ? "hidden"
-                      : ""
-                  } `}
-                  href={`https://www.instagram.com/${detailSosmed?.data?.instagram_id}`}
-                />
-                <Twitter
-                  className={`${
-                    detailSosmed?.data?.twitter_id === null ||
-                    detailSosmed?.data?.twitter_id === ""
-                      ? "hidden"
-                      : ""
-                  } 
-                  }`}
-                  href={`https://www.twitter.com/${detailSosmed?.data?.twitter_id}`}
-                />
-                <Facebook
-                  className={`${
-                    detailSosmed?.data?.facebook_id === null ||
-                    detailSosmed?.data?.facebook_id === ""
-                      ? "hidden"
-                      : ""
-                  }`}
-                  href={`https://www.facebook.com/${detailSosmed?.data?.facebook_id}`}
-                />
-
-                <HomeUrl
-                  className={`${
-                    detailPerson?.data?.homepage === null ||
-                    detailSosmed?.data?.homepage === ""
-                      ? "hidden"
-                      : ""
-                  }`}
-                  href={`${detailPerson?.data?.homepage}`}
-                />
+              
+              <div className="flex justify-center items-center gap-3.5 mt-4">
+                {detailSosmed?.data?.instagram_id && (
+                  <Instagram href={`https://www.instagram.com/${detailSosmed?.data?.instagram_id}`} />
+                )}
+                {detailSosmed?.data?.twitter_id && (
+                  <Twitter href={`https://www.twitter.com/${detailSosmed?.data?.twitter_id}`} />
+                )}
+                {detailSosmed?.data?.facebook_id && (
+                  <Facebook href={`https://www.facebook.com/${detailSosmed?.data?.facebook_id}`} />
+                )}
+                {detailPerson?.data?.homepage && (
+                  <HomeUrl href={detailPerson?.data?.homepage} />
+                )}
               </div>
             </div>
-            <div className="w-full p-1 md:w-3/5 md:mt-2 ">
-              <Simple
-                title={`Gender`}
-                quote={`${detailPerson?.data?.gender === 1 ? "Female" : ""} 
-              ${detailPerson?.data?.gender === 2 ? "Male" : ""}`}
+
+            {/* Profile Details Metadata */}
+            <div className="flex-1 w-full bg-slate-900/30 border border-white/5 p-6 rounded-2xl backdrop-blur-sm">
+              <MetadataItem
+                title="Gender"
+                quote={detailPerson?.data?.gender === 1 ? "Female" : "Male"}
               />
-              <Simple
-                title={`Birthday`}
-                quote={`${
-                  detailPerson?.data?.birthday === null
-                    ? "no birthday have been added"
-                    : `${FormatDate(detailPerson?.data?.birthday)}`
-                }`}
+              
+              <MetadataItem
+                title="Birthday"
+                quote={
+                  detailPerson?.data?.birthday
+                    ? FormatDate(detailPerson?.data?.birthday)
+                    : "No birthday added"
+                }
               />
-              <Simple
-                title={`Place of Birthday`}
-                quote={`${
-                  detailPerson?.data?.place_of_birth === null
-                    ? "no place of birthday have been added"
-                    : `${detailPerson?.data?.place_of_birth}`
-                }`}
+              
+              <MetadataItem
+                title="Place of Birth"
+                quote={detailPerson?.data?.place_of_birth || "No birthplace added"}
               />
-              <Simple
-                title={`Biography`}
-                quote={`${
-                  detailPerson?.data?.biography === ""
-                    ? "no biography have been added"
-                    : `${
-                        showMore
-                          ? detailPerson?.data?.biography
-                          : detailPerson?.data?.biography?.slice(0, 300)
-                      }`
-                }`}
-              />
-              <p
-                className={`${
-                  detailPerson?.data?.biography === "" && "hidden"
-                } ${
-                  detailPerson?.data?.biography?.length < 300 && "hidden"
-                } font-semibold text-sm mt-3 `}
-                onClick={() => setShowMore(!showMore)}
-              >
-                {showMore ? "show less .." : "show more..."}
-              </p>
-              <p className="mt-10 mb-2 mr-1 tracking-wide text-sm font-bold lg:text-base lg:font-semibold lg:text-black">
-                Also Known As
-              </p>
-              <ul className="flex flex-wrap gap-1">
-                {detailPerson?.data?.also_known_as?.length > 0
-                  ? detailPerson?.data?.also_known_as?.map((genre) => (
-                      <li
-                        key={Math.random(0, 12389123) * 10}
-                        className="text-sm text-slate-900 custom:text-black lg:text-base lg:ml-3 lg:font-semibold lg:tracking-wider"
+              
+              <div className="mb-4">
+                <h1 className="tracking-wide text-sm font-bold text-slate-100 mb-1">
+                  Biography
+                </h1>
+                <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-line">
+                  {detailPerson?.data?.biography
+                    ? showMore
+                      ? detailPerson?.data?.biography
+                      : `${detailPerson?.data?.biography?.slice(0, 300)}...`
+                    : "No biography added."}
+                </p>
+                {detailPerson?.data?.biography?.length > 300 && (
+                  <button
+                    className="text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-colors mt-2 cursor-pointer"
+                    onClick={() => setShowMore(!showMore)}
+                  >
+                    {showMore ? "Show Less &larr;" : "Read More &rarr;"}
+                  </button>
+                )}
+              </div>
+
+              <div className="mt-6 border-t border-white/10 pt-4">
+                <h1 className="tracking-wide text-sm font-bold text-slate-100 mb-2">
+                  Also Known As
+                </h1>
+                <div className="flex flex-wrap gap-1.5">
+                  {detailPerson?.data?.also_known_as?.length > 0 ? (
+                    detailPerson?.data?.also_known_as?.map((name) => (
+                      <span
+                        key={name}
+                        className="text-xs bg-white/5 border border-white/5 px-2.5 py-1 rounded text-slate-300"
                       >
-                        {genre}
-                      </li>
+                        {name}
+                      </span>
                     ))
-                  : "no have been added"}
-              </ul>
+                  ) : (
+                    <span className="text-xs text-slate-500">None</span>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         )}
 
-        <div className="w-full">
+        {/* Credits History */}
+        <div className="w-full mt-10">
           {detailCredits?.isLoading ? (
-            <div className="lg:flex lg:flex-col lg:w-1/2 lg:mt-10 lg:ml-6">
-              <div className="ml-1 mt-1 mr-1 bg-gray-200 animate-pulse duration-100 transition-all h-8 w-1/4"></div>
+            <div className="lg:flex lg:flex-col lg:w-1/2 lg:mt-10">
+              <div className="bg-slate-800/80 animate-pulse h-8 w-1/4 rounded mb-4"></div>
               <Skeletonv3 />
             </div>
           ) : (
-            <div className="flex flex-col items-center w-full ">
-              {" "}
-              <div className="w-full flex items-center justify-between custom:w-11/12 ">
-                {" "}
-                <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-black text-base lg:text-2xl">
-                  History
-                </div>
+            <div className="flex flex-col w-full">
+              <div className="w-full flex items-center justify-between border-b border-white/5 pb-4 mb-4">
+                <h2 className="font-bold tracking-tight text-white text-lg lg:text-2xl">
+                  Acting / Production History
+                </h2>
                 <select
-                  className={` py-2 border rounded-md mt-10 mr-8 ml-2 pr-5 border-slate-300 pl-2 outline-none bg-gray-100 `}
+                  className="py-1.5 border rounded-md pr-8 border-white/10 pl-3 outline-none bg-slate-900/80 text-slate-100 text-sm focus:border-indigo-500 transition-colors cursor-pointer"
                   value={schemaHistory}
                   onChange={(e) => setSchemaHistory(e.target.value)}
                 >
-                  <option value={`movie_credits`}>Movie</option>
-                  <option value={`tv_credits`}>Tv</option>
+                  <option className="bg-[#0b0f19]" value="movie_credits">Movie</option>
+                  <option className="bg-[#0b0f19]" value="tv_credits">TV Series</option>
                 </select>
               </div>
               <Credits detailCredits={detailCredits} />

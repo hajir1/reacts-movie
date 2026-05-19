@@ -1,37 +1,48 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="w-full bg-black text-gray-300 p-4 custom:flex custom:justify-center">
-      <div className="w-full custom:w-4/5 md:w-3/5 lg:mt-6">
-        {" "}
-        <h1 className="text-center ml-1 tracking-wide text-base font-semibold lg:text-base lg:font-normal ">
-          saya ucapkan terima kasih kepada <a href="http://">tmdb </a> karena
-          telah menyediakan data movie secara gratis dalam demontrasi website
-          ini , situs web ini dibuat untuk tujuan pembelajaran dan
-          demontrasi ketrampilan saya sebagai developer. saya tidak bermaksud
-          untuk melanggar hak cipta. <br /> pembuat server / data / seluruh api
-          pada website ini yaitu
-          <a
-            className="font-bold"
-            href="https://www.themoviedb.org/?language=id-ID"
-          >
-            &nbsp;&nbsp; tmdb&nbsp;&nbsp;
-          </a>
-          yang berarti seluruh data website ini terintergasi penuh dengan tmdb
-        </h1>
-        <h1 className="text-center ml-1 tracking-wide text-base font-semibold lg:text-base lg:font-normal">
-          kunjungi lebih lanjut{" "}
-          <a className="font-bold" href="https://usammuhazir.vercel.app/">
-            developer
-          </a>{" "}
-          website ini
-        </h1>
-        <h1 className="text-2xl text-center mt-2">
-          @ {new Date().getFullYear()}
-        </h1>
+    <footer className="w-full bg-[#070a10] border-t border-white/5 py-12 px-6 mt-16">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+        <div className="max-w-md">
+          <h2 className="text-lg font-bold text-white mb-2">
+            React<span className="text-gradient">Movie</span>
+          </h2>
+          <p className="text-sm text-slate-400 leading-relaxed">
+            Situs demonstrasi data film terintegrasi penuh dengan TMDB API. 
+            Dibuat untuk tujuan pembelajaran, portofolio, dan demonstrasi skill pengembangan front-end.
+          </p>
+        </div>
+        
+        <div className="flex flex-col items-center md:items-end gap-3">
+          <p className="text-xs text-slate-500">
+            Seluruh data, metadata, dan gambar disediakan oleh{" "}
+            <a 
+              href="https://www.themoviedb.org/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-indigo-400 hover:text-indigo-300 font-semibold underline transition-colors"
+            >
+              TMDB
+            </a>.
+          </p>
+          <p className="text-xs text-slate-500">
+            Developer:{" "}
+            <a 
+              href="https://usammuhazir.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-purple-400 hover:text-purple-300 font-semibold underline transition-colors"
+            >
+              Usam Muhazir
+            </a>
+          </p>
+          <p className="text-xs text-slate-600 mt-2">
+            &copy; {new Date().getFullYear()} ReactMovie. All rights reserved.
+          </p>
+        </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

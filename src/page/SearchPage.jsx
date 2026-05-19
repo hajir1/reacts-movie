@@ -1,116 +1,114 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../component/layouts/Navbar";
 import { useSearch } from "../state/Management";
 import { SearchIcon } from "@chakra-ui/icons";
-import { BoxV2 } from "../component/layouts/BoxModel";
 import { UseAPISearch, UseAPISearchTv } from "../services/API_DATA";
-import Simple from "../component/element/Label";
 import FormatDate from "../libs/Formatdate";
-import Laman from "../component/fragment/Laman";
+import Breadcrumb from "../component/fragment/Breadcrumb";
+import { getTmdbImageUrl } from "../libs/imageHelper";
 
-const ComponentSearch = ({ datas, title }) => {
+const ComponentSearch = ({ datas, title, type }) => {
   return (
-    <>
-      {" "}
-      <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl lg:ml-4">
+    <div className="max-w-6xl mx-auto px-4 mt-10">
+      <div className="font-bold tracking-tight text-white text-xl lg:text-2xl mb-4">
         {title}
       </div>
-      <div className="">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {datas?.data?.results?.length > 0 ? (
-          datas?.data?.results
-            ?.sort((a, b) => {
-              const date =
-                new Date(b?.release_date) - new Date(a?.release_date);
-              return date;
+          [...datas.data.results]
+            .sort((a, b) => {
+              const dateA = new Date(a?.release_date || a?.first_air_date);
+              const dateB = new Date(b?.release_date || b?.first_air_date);
+              const timeA = isNaN(dateA.getTime()) ? 0 : dateA.getTime();
+              const timeB = isNaN(dateB.getTime()) ? 0 : dateB.getTime();
+              return timeB - timeA;
             })
-            ?.map((data) => (
+            .map((data) => (
               <Link
-                to={`${`/movie/${data?.id}`}`}
-                className="p-1 justify-evenly flex items-center gap-1 lg:p-2 w-full lg:w-1/2 "
+                to={type === "tv" ? `/tvseries/${data?.id}` : `/movie/${data?.id}`}
+                className="p-2 flex items-center gap-4 rounded-xl hover:bg-white/5 transition-colors border border-white/5 bg-slate-900/20 backdrop-blur-sm"
                 key={data?.id}
               >
-                <div className=" relative">
-                  {" "}
+                <div className="relative shrink-0">
                   <img
-                    src={`${
-                      data?.backdrop_path === null
-                        ? "/movienotfound.webp"
-                        : `https://image.tmdb.org/t/p/w300/${data?.backdrop_path}`
-                    }`}
-                    className="w-14 h-14 rounded-md object-cover object-center lg:w-16 lg:h-16 "
+                    src={getTmdbImageUrl(data?.backdrop_path, "w300")}
+                    className="w-16 h-16 rounded-lg object-cover object-center"
+                    alt="backdrop"
+                    loading="lazy"
                   />
-                  <div
-                    style={{
-                      boxShadow:
-                        "0px 2px 1.2rem gray inset, 0px 4px 6px rgba(0, 0, 0, 0.1)",
-                      mixBlendMode: "multiply",
-                    }}
-                    className="absolute inset-0 rounded-md pointer-events-none"
-                  />
+                  <div className="absolute inset-0 rounded-lg pointer-events-none card-inset-shadow" />
                 </div>
-                <div className="flex flex-col w-4/5 lg:ml-2 ">
-                  {" "}
-                  <h1 className="ml-1 mt-1 mr-1 tracking-wide text-sm font-bold lg:text-base lg:text-black lg:font-semibold">
-                    {data?.title}
+                <div className="flex flex-col justify-center min-w-0">
+                  <h1 className="text-sm font-bold text-slate-100 truncate">
+                    {data?.title || data?.name}
                   </h1>
-                  <div className="flex items-center justify-start">
-                    {" "}
-                    <p className="ml-1 tracking-wide text-xs font-semibold lg:text-sm lg:text-black">
-                      {FormatDate(data?.release_date)} /{" "}
-                      {Math.round(data?.vote_average * 10) + " %"}
-                    </p>
-                  </div>
+                  <p className="text-xs text-slate-400 mt-1">
+                    {FormatDate(data?.release_date || data?.first_air_date)} &bull;{" "}
+                    <span className="text-indigo-400 font-semibold">
+                      {Math.round((data?.vote_average || 0) * 10)}% Match
+                    </span>
+                  </p>
                 </div>
               </Link>
             ))
         ) : (
-          <h1 className="w-full ml-1 mt-2 mr-1 tracking-wide text-base font-semibold lg:ml-4">
-            no data query have been added
+          <h1 className="text-sm text-slate-400 font-semibold col-span-2">
+            No results found
           </h1>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
 const SearchPage = () => {
   const { key } = useParams();
   const { search, setSearch } = useSearch();
-  const SearchData = UseAPISearch(search);
-  const SearchDataTv = UseAPISearchTv(search);
-
+  const SearchData = UseAPISearch(key);
+  const SearchDataTv = UseAPISearchTv(key);
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (search === "") {
+    if (key) {
       setSearch(key);
     }
-  }, [key]);
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      navigate(`/search/${search}`);
+  }, [key, setSearch]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (search.trim().length > 0) {
+      navigate(`/search/${search.trim()}`);
     }
-  });
+  };
+
   return (
-    <div className="w-full">
+    <div className="w-full min-h-screen bg-[#0b0f19] text-slate-100 pb-16">
       <Navbar />
-      <Laman about={`search | ${key}`} />
-      <div className="w-full mt-10">
-        <div className="relative w-full flex items-center border-b-[1px]">
-          <div className="absolute w-10 flex items-center justify-center h-full ">
-            <SearchIcon fill={`${search?.length > 0 ? "primary" : "gray"}`} />
+      <Breadcrumb about={`search | ${key}`} />
+      
+      {/* Search Input Container */}
+      <div className="max-w-6xl mx-auto px-4 mt-8">
+        <form 
+          onSubmit={handleSubmit} 
+          className="relative w-full flex items-center bg-slate-900/60 border border-white/10 rounded-xl focus-within:border-indigo-500/50 transition-all duration-200"
+        >
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
+            <SearchIcon className="text-slate-400" />
           </div>
           <input
             required
             onChange={(e) => setSearch(e.target.value)}
-            className={`w-5/6 ml-10 outline-none pl-2  text-slate-800 placeholder:tracking-wider placeholder:text-slate-800 py-2  border-b-slate-700 transition-all duration-100 `}
+            className="w-full outline-none pl-12 pr-4 bg-transparent text-slate-100 placeholder:text-slate-500 py-3.5 text-base rounded-xl"
             value={search}
-            placeholder={search?.length > 0 ? search : "search movie..."}
+            placeholder="Search for movies or TV series..."
           />
-        </div>
+        </form>
       </div>
-      <ComponentSearch datas={SearchData} title={`Movies`} />
-      <ComponentSearch datas={SearchDataTv} title={`Tv Series`} />
+
+      {/* Results */}
+      <ComponentSearch datas={SearchData} title="Movies" type="movie" />
+      <ComponentSearch datas={SearchDataTv} title="TV Series" type="tv" />
     </div>
   );
 };

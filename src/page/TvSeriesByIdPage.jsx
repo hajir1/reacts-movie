@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Navbar from "../component/layouts/Navbar";
 import {
   UseAPIById,
@@ -12,15 +12,15 @@ import { useParams } from "react-router-dom";
 
 import Hero from "../component/layouts/Hero";
 import { BoxV3, BoxV4, BoxV5 } from "../component/layouts/BoxModel";
-import Simple from "../component/element/Label";
 import Keyword from "../component/layouts/Keyword";
 import {
   Facebook,
   HomeUrl,
   Instagram,
   Twitter,
-} from "../component/element/Sosmed";
-import Laman from "../component/fragment/Laman";
+} from "../component/element/SocialLinks";
+import Breadcrumb from "../component/fragment/Breadcrumb";
+import MetadataItem from "../component/element/MetadataItem";
 
 const TvSeriesByIdPage = () => {
   const { id } = useParams();
@@ -37,7 +37,7 @@ const TvSeriesByIdPage = () => {
   return (
     <div className="w-full">
       <Navbar />
-      <Laman about={`tv series | ${detailTvSeries?.data?.name}`} />
+      <Breadcrumb about={`tv series | ${detailTvSeries?.data?.name}`} />
       <Hero datas={detailTvSeries} type={`tv`} />
       <div className="w-full lg:flex">
         {" "}
@@ -47,7 +47,7 @@ const TvSeriesByIdPage = () => {
               detailChar?.isLoading && detailTvSeries?.isLoading && "hidden"
             } lg:p-4`}
           >
-            <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl">
+            <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-slate-100 text-xl lg:text-2xl">
               Character
             </div>
 
@@ -60,7 +60,7 @@ const TvSeriesByIdPage = () => {
               "hidden"
             } w-full lg:p-4`}
           >
-            <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl">
+            <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-slate-100 text-xl lg:text-2xl">
               Recomendations
             </div>
             <BoxV4 type={`tv`} datas={detailRecomendation} />
@@ -70,7 +70,7 @@ const TvSeriesByIdPage = () => {
               detailVideo?.isLoading && detailTvSeries?.isLoading && "hidden"
             } w-full my-2 p-2 `}
           >
-            <div className="mt-2 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl">
+            <div className="mt-2 pl-2 font-sans font-bold tracking-normal text-slate-100 text-xl lg:text-2xl">
               Video
             </div>
             <BoxV5 type={`tv`} datas={detailVideo} />
@@ -79,9 +79,9 @@ const TvSeriesByIdPage = () => {
         <div
           className={`${
             detailKeyword?.isLoading && detailTvSeries?.isLoading && "hidden"
-          } w-full lg:w-[23%] custom:w-4/5 p-1 lg:bg-gray-50`}
+          } w-full lg:w-[23%] custom:w-4/5 p-4 lg:bg-slate-900/30 lg:border-l lg:border-white/5`}
         >
-          <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-black text-xl lg:text-2xl">
+          <div className="mt-10 pl-2 font-sans font-bold tracking-normal text-slate-100 text-xl lg:text-2xl">
             Keywords
           </div>
           <Keyword datas={detailKeyword} type={`tv`} />
@@ -122,19 +122,19 @@ const TvSeriesByIdPage = () => {
             />
           </div>
           <div className={`${detailTvSeries?.isLoading && "hidden"} lg:mt-10`}>
-            <Simple
+            <MetadataItem
               quote={`${detailTvSeries?.data?.original_name}`}
               title={`Original Name`}
             />
-            <Simple
+            <MetadataItem
               quote={`${detailTvSeries?.data?.seasons[0]?.episode_count} Season`}
               title={`Season`}
             />
-            <Simple
+            <MetadataItem
               quote={`${detailTvSeries?.data?.status}`}
               title={`Status`}
             />
-            <Simple
+            <MetadataItem
               quote={`${
                 detailTvSeries?.data?.next_episode_to_air?.name
                   ? detailTvSeries?.data?.next_episode_to_air?.name
@@ -142,7 +142,7 @@ const TvSeriesByIdPage = () => {
               }`}
               title={`Next Episode`}
             />
-            <Simple
+            <MetadataItem
               quote={`${
                 detailTvSeries?.data?.spoken_languages[0]
                   ? `${detailTvSeries?.data?.spoken_languages[0]?.name} / ${detailTvSeries?.data?.spoken_languages[0]?.english_name}`
